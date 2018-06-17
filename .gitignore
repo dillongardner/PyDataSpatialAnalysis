@@ -1,0 +1,7 @@
+# Data Files
+data/*
+
+# OS Files
+.DS_Store
+
+examples/.ipynb_checkpoints/*
