@@ -5,3 +5,7 @@ data/*
 .DS_Store
 
 examples/.ipynb_checkpoints/*
+
+# IDE
+.idea/*
+*.iml
