@@ -39,7 +39,10 @@ def process_dhs_data():
     gdf = gpd.read_file(DHS_GEO_PATH)
     gdf = gdf[geo_columns]
     gdf.columns = ['cluster', 'geometry']
-    return gdf.set_index('cluster').join(df.set_index('cluster'), how='left').reset_index()
+    res = gdf.set_index('cluster').join(df.set_index('cluster'), how='left').reset_index()
+    # Clusters that have 0,0 listed as location
+    clusters_without_location = {302, 373, 422, 514, 557, 569, 639}
+    return res[res.cluster.map(lambda x: x not in clusters_without_location)]
 
 
 def make_fake_points_in_nigeria(num_points=890):
@@ -75,10 +78,11 @@ def make_fake_data(num_clusters):
 
 
 if __name__ == '__main__':
-    if os.path.isfile(DHS_HOUSEHOLD_PATH) and os.path.isfile(DHS_GEO_PATH):
+    if os.path.isfile(DHS_HOUSEHOLD_PATH) and os.path.isdir(DHS_GEO_PATH):
         res = process_dhs_data()
     else:
         print('DHS data are not in {}'.format(DATA_PATH))
         print('Creating synthetic data')
         res = make_fake_data(890)
-    res.to_file(os.path.join(DATA_PATH, 'formatted_dhs_data.shp'))
+    os.makedirs(os.path.join(DATA_PATH, 'formatted_dhs'), exist_ok=True)
+    res.to_file(os.path.join(DATA_PATH, 'formatted_dhs', 'formatted_dhs_data.shp'))
