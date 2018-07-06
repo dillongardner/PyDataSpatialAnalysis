@@ -1,0 +1,14 @@
+affine==2.2.1
+Cartopy==0.16.0
+descartes==1.1.0
+Fiona==1.7.11.post2
+geopandas==0.3.0
+matplotlib==2.2.2
+numpy==1.14.4
+pandas==0.23.0
+pyproj==1.9.5.1
+pyshp==1.2.12
+rasterio==1.0b1
+scipy==1.1.0
+seaborn==0.8.1
+Shapely==1.6.4.post1
